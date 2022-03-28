@@ -11,7 +11,8 @@ type UseHandleFetchAndLoadResults<Data> = [
 ]
 
 
-export function useHandleFetchAndLoad<Data>(endpoint : string, requestOptions: any): UseHandleFetchAndLoadResults<Data> {
+export function useHandleFetchAndLoad<Data>(options: { endpoint : string, requestOptions: any }): UseHandleFetchAndLoadResults<Data> {
+  const {endpoint, requestOptions} = options;
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);

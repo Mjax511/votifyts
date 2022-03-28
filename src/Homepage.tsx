@@ -15,7 +15,7 @@ export const Homepage = () => {
 
   const [loading, data] = useHandleFetchAndLoad<{
     display_name: string;
-  }>(endpoint, requestOptions);
+  }>({ endpoint, requestOptions });
 
   if (loading) {
     return <div>Loading from {endpoint}</div>;
