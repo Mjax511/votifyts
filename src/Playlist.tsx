@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 
 export const PlayList: React.FC = () => {
-  const [itemClicked, setItemClicked] = useState(null);
+  const [itemClicked , setItemClicked] = useState<number>(-1);
   const endpoint = "https://api.spotify.com/v1/me/playlists";
 
   const myHeaders = new Headers();
@@ -33,10 +33,19 @@ export const PlayList: React.FC = () => {
     return <div>Playlist Loading from {endpoint}</div>;
   }
 
+  if (itemClicked !== -1){
+    return <div>{data.items[itemClicked].name}</div>
+  }
+  const onClick = (options: {key: number}): void => {
+    const {key} = options;
+    console.log(key)
+    setItemClicked(key);
+  }
+
   const listPlaylists = (list: fetchData) => {
     return list.items.map((e, i) => {
       console.log(e.tracks);
-      return <li key={i}>{e.name}</li>;
+      return <li key={i} onClick={()=> onClick({key: i})}>{e.name}</li>;
     });
   };
   return (
