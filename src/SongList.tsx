@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 
-export const Songlist = (props: { playlistId: string }): React.ReactElement => {
+type FetchData = {
+  items: Array<{ track: { name: string } }>;
+  offset: number;
+  next: string;
+  total: number;
+};
+
+export const Songlist: React.FC<{ playlistId: string }> = ({ playlistId }) => {
   const [songList, setSongList] = useState({ index: 0, tracks: [] });
-  const endpoint = `https://api.spotify.com/v1/playlists/${props.playlistId}/tracks?offset=${songList.index}`;
+  const endpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?offset=${songList.index}`;
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${sessionStorage.accessToken}`);
 
@@ -12,13 +19,8 @@ export const Songlist = (props: { playlistId: string }): React.ReactElement => {
     headers: myHeaders,
     redirect: "follow",
   };
-  type fetchData = {
-    items: Array<{ track: {name: string} }>;
-    offset: number;
-    next: string;
-    total: number;
-  };
-  const [loading, data, error] = useHandleFetchAndLoad<fetchData>({
+
+  const [loading, data, error] = useHandleFetchAndLoad<FetchData>({
     endpoint,
     requestOptions,
   });
@@ -26,22 +28,12 @@ export const Songlist = (props: { playlistId: string }): React.ReactElement => {
   if (loading) {
     return <div>Playlist Loading from {endpoint}</div>;
   }
-  if (!data){
-    return <div>no data in songlist</div>
+  if (!data) {
+    return <div>no data in songlist</div>;
   }
-  const listSongs = (list: fetchData["items"]) => {
-    return list.map(( song,i ) => <li>{song.track.name}</li>)
-  }
-  // const listPlay = (list) => {
-  //   return list.map((song, i) => (
-  //     <List.Item key={i}>{song.track.name}</List.Item>
-  //   ));
-  // };
-  // let [loading, data, error, refresh] = useHandleFetchAndLoad(
-  //   endpoint,
-  //   requestOptions
-  // );
-  // }
+  const listSongs = (list: FetchData) => {
+    return list.items.map((song, i) => <li key={i}>{song.track.name}</li>);
+  };
 
   // const playlistLength = data.total;
 
@@ -53,5 +45,9 @@ export const Songlist = (props: { playlistId: string }): React.ReactElement => {
   //   }));
   //   if (data.next) refresh();
 
-  return <ul>{listSongs(data.items)}</ul>;
+  return (
+    <div>
+      <ul>{listSongs(data)}</ul>
+    </div>
+  );
 };
