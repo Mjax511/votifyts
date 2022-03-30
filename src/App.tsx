@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
+import { Songlist } from "./SongList";
 import { useAuth, ProvideAuth } from "./AuthContext";
 import { VStack, Flex, Container } from "@chakra-ui/react";
 import { Test3 } from "./Test3";
@@ -16,9 +17,9 @@ function App() {
           <VStack w="full" h="full" p={10} alignItems="flex-start">
             <Routes>
               <Route path="/login" element={<LoginButton />} />
-              <Route path="/" element={<Test myString="test from test" />} />
+              <Route path="/" element={<Homepage />} >
+              </Route>
               <Route path="/auth-check" element={<AuthCheck />} />
-              <Route path="/home" element={<Homepage />} />
               <Route
                 path="/test"
                 element={

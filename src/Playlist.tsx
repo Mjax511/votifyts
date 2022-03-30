@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 import { Songlist } from "./SongList";
+import { Route } from "react-router-dom";
 
 type FetchData = {
   items: Array<{ name: string; id: string; tracks: any }>;
@@ -39,7 +40,8 @@ export const PlayList: React.FC = () => {
   }
 
   if (playlistId !== null) {
-    return <Songlist playlistId={data.items[playlistId].id}></Songlist>;
+    // return <Songlist playlistId={data.items[playlistId].id}></Songlist>;
+    return <Route path=":playlistId" element={<Songlist playlistId="{data.items[playlistId].name}"/>}/>
   }
   const onClick = (options: { key: number }): void => {
     const { key } = options;
