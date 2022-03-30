@@ -5,25 +5,32 @@ import { LoginButton } from "./LoginButton";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
 import { useAuth, ProvideAuth } from "./AuthContext";
+import { VStack, Flex, Container } from "@chakra-ui/react";
 import { Test3 } from "./Test3";
 
 function App() {
   return (
     <ProvideAuth>
-      <Routes>
-        <Route path="/login" element={<LoginButton />} />
-        <Route path="/" element={<Test myString="test from test" />} />
-        <Route path="/auth-check" element={<AuthCheck />} />
-        <Route path="/home" element={<Homepage />} />
-        <Route
-          path="/test"
-          element={
-            <Test2 myString="test from test2">
-              <Test myString={`${useAuth()?.user}`} />
-            </Test2>
-          }
-        />
-      </Routes>
+      <Container maxWidth="container.xl" padding={0}>
+        <Flex h="100vh" py={0}>
+          <VStack w="full" h="full" p={10} alignItems="flex-start">
+            <Routes>
+              <Route path="/login" element={<LoginButton />} />
+              <Route path="/" element={<Test myString="test from test" />} />
+              <Route path="/auth-check" element={<AuthCheck />} />
+              <Route path="/home" element={<Homepage />} />
+              <Route
+                path="/test"
+                element={
+                  <Test2 myString="test from test2">
+                    <Test myString={`${useAuth()?.user}`} />
+                  </Test2>
+                }
+              />
+            </Routes>
+          </VStack>
+        </Flex>
+      </Container>
     </ProvideAuth>
   );
 }
@@ -35,7 +42,7 @@ function Test(props: { myString: string | null }): React.ReactElement | null {
 
 const Test2: React.FC<{ myString: string | null }> = () => {
   // return <div>{props.children}</div>; //why
-  useAuth()?.setUser("mjax")
+  useAuth()?.setUser("mjax");
   return <div>{`${useAuth()?.user}`}</div>;
 };
 
