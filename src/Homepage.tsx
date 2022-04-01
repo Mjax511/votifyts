@@ -1,6 +1,7 @@
 import React from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import {PlayList} from "./Playlist";
+import { Playlist } from "./Playlist";
+import { Link } from "react-router-dom";
 
 export const Homepage = () => {
   const endpoint = "https://api.spotify.com/v1/me";
@@ -25,7 +26,7 @@ export const Homepage = () => {
   return (
     <div>
       <h1>Welcome {userName}</h1>
-      <PlayList />
+      <Link to="/playlists">Playlists</Link>
     </div>
   );
 };

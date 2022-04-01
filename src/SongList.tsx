@@ -7,6 +7,7 @@ type FetchData = {
   offset: number;
   next: string;
   total: number;
+  error: null | {error: any}
 };
 
 export const Songlist: React.FC = () => {
@@ -26,12 +27,15 @@ export const Songlist: React.FC = () => {
     endpoint,
     requestOptions,
   });
-  console.log(data);
+  console.log(loading, data, error);
   if (loading) {
     return <div>Playlist Loading from {endpoint}</div>;
   }
   if (!data) {
     return <div>no data in songlist</div>;
+  }
+  if (data.error) {
+    return <div>404</div>;
   }
   const listSongs = (list: FetchData) => {
     return list.items.map((song, i) => <li key={i}>{song.track.name}</li>);

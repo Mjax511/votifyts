@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { Songlist } from "./SongList";
-import { Route, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type FetchData = {
   items: Array<{ name: string; id: string; tracks: any }>;
   total: number;
 };
 
-export const PlayList: React.FC = () => {
+export const Playlist: React.FC = () => {
   const navigate = useNavigate();
-  const [playlistId, setPlaylistId] = useState<null | number>(null);
   const endpoint = "https://api.spotify.com/v1/me/playlists";
 
   const myHeaders = new Headers();
@@ -27,10 +25,6 @@ export const PlayList: React.FC = () => {
     requestOptions: requestoptions,
   });
 
-  // const onClick(options: {key : any}) => {
-  //   setPlaylistId(options.key);
-  // };
-
   if (loading) {
     return <div>Playlist Loading from {endpoint}</div>;
   }
@@ -40,13 +34,9 @@ export const PlayList: React.FC = () => {
     return <div>Playlist Loading from {endpoint}</div>;
   }
 
-  if (playlistId !== null) {
-    return <Navigate to={`playlists/${data.items[playlistId].id}`} />;
-  }
   const onClick = (options: { key: number }) => {
     const { key } = options;
-    console.log(data.items[key].id);
-    navigate(`playlists/${data.items[key].id}`);
+    navigate(`/playlists/${data.items[key].id}`);
   };
 
   const listPlaylists = (list: FetchData) => {
