@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 import { Songlist } from "./SongList";
-import { Route } from "react-router-dom";
+import { Route, Navigate, useNavigate } from "react-router-dom";
 
 type FetchData = {
   items: Array<{ name: string; id: string; tracks: any }>;
@@ -9,6 +9,7 @@ type FetchData = {
 };
 
 export const PlayList: React.FC = () => {
+  const navigate = useNavigate();
   const [playlistId, setPlaylistId] = useState<null | number>(null);
   const endpoint = "https://api.spotify.com/v1/me/playlists";
 
@@ -40,12 +41,12 @@ export const PlayList: React.FC = () => {
   }
 
   if (playlistId !== null) {
-    // return <Songlist playlistId={data.items[playlistId].id}></Songlist>;
-    return <Route path=":playlistId" element={<Songlist playlistId="{data.items[playlistId].name}"/>}/>
+    return <Navigate to={`playlists/${data.items[playlistId].id}`} />;
   }
-  const onClick = (options: { key: number }): void => {
+  const onClick = (options: { key: number }) => {
     const { key } = options;
-    setPlaylistId(key);
+    console.log(data.items[key].id);
+    navigate(`playlists/${data.items[key].id}`);
   };
 
   const listPlaylists = (list: FetchData) => {

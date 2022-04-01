@@ -17,8 +17,8 @@ function App() {
           <VStack w="full" h="full" p={10} alignItems="flex-start">
             <Routes>
               <Route path="/login" element={<LoginButton />} />
-              <Route path="/" element={<Homepage />} >
-              </Route>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/playlists/:playlistId" element={<Songlist />} />
               <Route path="/auth-check" element={<AuthCheck />} />
               <Route
                 path="/test"

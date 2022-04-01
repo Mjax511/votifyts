@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
+import { useParams } from "react-router-dom";
 
 type FetchData = {
   items: Array<{ track: { name: string } }>;
@@ -8,7 +9,8 @@ type FetchData = {
   total: number;
 };
 
-export const Songlist: React.FC<{ playlistId: string }> = ({ playlistId }) => {
+export const Songlist: React.FC = () => {
+  const playlistId = useParams().playlistId;
   const [songList, setSongList] = useState({ index: 0, tracks: [] });
   const endpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?offset=${songList.index}`;
   var myHeaders = new Headers();
