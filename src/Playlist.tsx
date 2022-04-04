@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
+import { Songlist } from "./SongList";
+
+type FetchData = {
+  items: Array<{ name: string; id: string; tracks: any }>;
+  total: number;
+};
 
 export const PlayList: React.FC = () => {
-  const [itemClicked, setItemClicked] = useState(null);
+  const [playlistId, setPlaylistId] = useState<null | number>(null);
   const endpoint = "https://api.spotify.com/v1/me/playlists";
 
   const myHeaders = new Headers();
@@ -14,14 +20,13 @@ export const PlayList: React.FC = () => {
     redirect: "follow",
   };
 
-  type fetchData = { items: Array<{ name: string; tracks: any }>; total: number };
-  const [loading, data] = useHandleFetchAndLoad<fetchData>({
+  const [loading, data] = useHandleFetchAndLoad<FetchData>({
     endpoint,
     requestOptions: requestoptions,
   });
 
   // const onClick(options: {key : any}) => {
-  //   setItemClicked(options.key);
+  //   setPlaylistId(options.key);
   // };
 
   if (loading) {
@@ -33,10 +38,21 @@ export const PlayList: React.FC = () => {
     return <div>Playlist Loading from {endpoint}</div>;
   }
 
-  const listPlaylists = (list: fetchData) => {
-    return list.items.map((e, i) => {
-      console.log(e.tracks);
-      return <li key={i}>{e.name}</li>;
+  if (playlistId !== null) {
+    return <Songlist playlistId={data.items[playlistId].id}></Songlist>;
+  }
+  const onClick = (options: { key: number }): void => {
+    const { key } = options;
+    setPlaylistId(key);
+  };
+
+  const listPlaylists = (list: FetchData) => {
+    return list.items.map((playlist, i) => {
+      return (
+        <li key={i} onClick={() => onClick({ key: i })}>
+          {playlist.name}
+        </li>
+      );
     });
   };
   return (
