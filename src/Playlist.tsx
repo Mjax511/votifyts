@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 import { useParams } from "react-router-dom";
-import { List, ListItem, Spinner } from "@chakra-ui/react";
+import { List, ListItem, Spinner, Box } from "@chakra-ui/react";
 
 type FetchData = {
   items: Array<{ track: { name: string } }>;
   offset: number;
   next: string;
   total: number;
-  error: null | {error: any}
+  error: null | { error: any };
 };
 
 export const Playlist: React.FC = () => {
@@ -32,21 +32,24 @@ export const Playlist: React.FC = () => {
 
   if (loading) {
     return (
-      <div>
+      <Box>
         <Spinner />
-        <div>Playlist Loading from {endpoint}</div>
-      </div>)
+        <Box>Playlist Loading from {endpoint}</Box>
+      </Box>
+    );
   }
 
   if (!data) {
-    return <div>no data in songlist</div>;
+    return <Box>no data in songlist</Box>;
   }
 
   if (data.error) {
-    return <div>404</div>;
+    return <Box>404</Box>;
   }
   const listSongs = (list: FetchData) => {
-    return list.items.map((song, i) => <ListItem key={i}>{song.track.name}</ListItem>);
+    return list.items.map((song, i) => (
+      <ListItem key={i}>{song.track.name}</ListItem>
+    ));
   };
 
   // const playlistLength = data.total;
@@ -60,8 +63,8 @@ export const Playlist: React.FC = () => {
   //   if (data.next) refresh();
 
   return (
-    <div>
-      <List variant="striped">{listSongs(data)}</List>
-    </div>
+    <Box>
+      <List>{listSongs(data)}</List>
+    </Box>
   );
 };

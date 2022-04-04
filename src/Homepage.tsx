@@ -1,7 +1,7 @@
 import React from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 import { Link as RouterLink } from "react-router-dom";
-import { Link, Spinner } from "@chakra-ui/react";
+import { Link, Spinner, Box } from "@chakra-ui/react";
 
 export const Homepage = () => {
   const endpoint = "https://api.spotify.com/v1/me";
@@ -20,20 +20,20 @@ export const Homepage = () => {
 
   if (loading) {
     return (
-      <div>
+      <Box>
         <Spinner />
-        <div>Loading from {endpoint}</div>
-      </div>
+        <Box>Loading from {endpoint}</Box>
+      </Box>
     );
   }
 
   const userName = data?.display_name;
   return (
-    <div>
+    <Box>
       <h1>Welcome {userName}</h1>
       <Link as={RouterLink} to="/playlists">
         Playlists
       </Link>
-    </div>
+    </Box>
   );
 };

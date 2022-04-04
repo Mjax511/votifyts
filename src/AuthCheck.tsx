@@ -54,9 +54,11 @@ export const AuthCheck: React.FC<{}> = () => {
   }
 
   // prevents user from goint to /auth-check uri
-  console.log(window.location.href.split("?"))
-  if (window.location.href.split("?")[0] === "http://localhost:3000/auth-check") {
+  console.log(window.location.href.split("?"));
+  if (
+    window.location.href.split("?")[0] === "http://localhost:3000/auth-check"
+  ) {
     return <Navigate to="/" />;
   }
-  return <Route element={<Navigate to="/login" />} />;
+  return <Navigate to="/login" />;
 };
