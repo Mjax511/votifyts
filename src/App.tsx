@@ -4,8 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
-import { Songlist } from "./SongList";
 import { Playlist } from "./Playlist";
+import { Playlists } from "./Playlists";
 import { useAuth, ProvideAuth } from "./AuthContext";
 import { VStack, Flex, Container } from "@chakra-ui/react";
 import { Test3 } from "./Test3";
@@ -19,8 +19,8 @@ function App() {
             <Routes>
               <Route path="/login" element={<LoginButton />} />
               <Route path="/" element={<Homepage />} />
-              <Route path="/playlists" element={<Playlist />} />
-              <Route path="/playlists/:playlistId" element={<Songlist />} />
+              <Route path="/playlists" element={<Playlists />} />
+              <Route path="/playlists/:playlistId" element={<Playlist />} />
               <Route path="/auth-check" element={<AuthCheck />} />
               <Route
                 path="/test"
