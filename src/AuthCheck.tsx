@@ -46,17 +46,13 @@ const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   return <Navigate to="/" />;
 };
 export const AuthCheck: React.FC<{}> = () => {
-  const authCode = window.location.href.split("?")[1]
-    ? window.location.href.split("?")[1].split("=")[1]
-    : null;
+  const url = window.location.search;
+  const searchParams = new URLSearchParams(url);
+  const authCode = searchParams.get("code");
+
   if (authCode && !sessionStorage.getItem("accessToken")) {
     return <HandleAuth authCode={authCode} />;
   }
 
-  // prevents user from goint to /auth-check uri
-  console.log(window.location.href.split("?"))
-  if (window.location.href.split("?")[0] === "http://localhost:3000/auth-check") {
-    return <Navigate to="/" />;
-  }
-  return <Route element={<Navigate to="/login" />} />;
+  return <Navigate to="/login" />;
 };
