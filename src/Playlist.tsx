@@ -28,7 +28,6 @@ export const Playlist: React.FC = () => {
     endpoint,
     requestOptions,
   });
-  console.log(loading, data, error);
 
   if (loading) {
     return (
@@ -46,7 +45,6 @@ export const Playlist: React.FC = () => {
     return <div>404</div>;
   }
   const listSongs = (list: FetchData) => {
-    console.log(list.items);
     return list.items.map((song, i) => (
       <ListItem key={i}>{song.track.name}</ListItem>
     ));
