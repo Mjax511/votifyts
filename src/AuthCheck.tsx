@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Navigate } from "react-router-dom";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
+import { Spinner } from "@chakra-ui/react";
 
 const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   const endpoint = "https://accounts.spotify.com/api/token";
@@ -33,7 +34,7 @@ const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   }>({ endpoint, requestOptions });
 
   if (loading) {
-    return <div>Loading from {endpoint}</div>;
+    return <Spinner />;
   }
 
   if (!data || error) {

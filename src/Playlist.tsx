@@ -34,7 +34,6 @@ export const Playlist: React.FC = () => {
     return (
       <div>
         <Spinner />
-        <div>Playlist Loading from {endpoint}</div>
       </div>
     );
   }

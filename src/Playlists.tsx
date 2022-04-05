@@ -30,7 +30,6 @@ export const Playlists: React.FC = () => {
     return (
       <div>
         <Spinner />
-        <div>Playlist Loading from {endpoint}</div>
       </div>
     );
   }
