@@ -40,15 +40,15 @@ export const Playlists: React.FC = () => {
     return <div>Playlist Loading from {endpoint}</div>;
   }
 
-  const onClick = (options: { key: number }) => {
-    const { key } = options;
-    navigate(`/playlists/${data.items[key].id}`);
+  const onClick = (options: { index: number }) => {
+    const { index } = options;
+    navigate(`/playlists/${data.items[index].id}`);
   };
 
   const listPlaylists = (list: FetchData) => {
     return list.items.map((playlist, i) => {
       return (
-        <ListItem key={i} onClick={() => onClick({ key: i })}>
+        <ListItem key={playlist.id} onClick={() => onClick({ index: i })}>
           {playlist.name}
         </ListItem>
       );

@@ -8,7 +8,7 @@ type FetchData = {
   offset: number;
   next: string;
   total: number;
-  error: null | {error: any}
+  error: null | { error: any };
 };
 
 export const Playlist: React.FC = () => {
@@ -35,7 +35,8 @@ export const Playlist: React.FC = () => {
       <div>
         <Spinner />
         <div>Playlist Loading from {endpoint}</div>
-      </div>)
+      </div>
+    );
   }
 
   if (!data) {
@@ -46,7 +47,10 @@ export const Playlist: React.FC = () => {
     return <div>404</div>;
   }
   const listSongs = (list: FetchData) => {
-    return list.items.map((song, i) => <ListItem key={i}>{song.track.name}</ListItem>);
+    console.log(list.items);
+    return list.items.map((song, i) => (
+      <ListItem key={i}>{song.track.name}</ListItem>
+    ));
   };
 
   // const playlistLength = data.total;
