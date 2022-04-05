@@ -6,6 +6,7 @@ import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
 import { Playlist } from "./Playlist";
 import { Playlists } from "./Playlists";
+import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth, ProvideAuth } from "./AuthContext";
 import { Test3 } from "./Test3";
 
@@ -13,18 +14,16 @@ function App() {
   return (
     <ProvideAuth>
       <Routes>
-        <Route path="/login" element={<LoginButton />} />
+        <Route path="login" element={<LoginButton />} />
         <Route path="/" element={<Homepage />} />
-        <Route path="/playlists" element={<Playlists />} />
-        <Route path="/playlists/:playlistId" element={<Playlist />} />
-        <Route path="/auth-check" element={<AuthCheck />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/playlists" element={<Playlists />} />
+          <Route path="playlists/:playlistId" element={<Playlist />} />
+        </Route>
+        <Route path="auth-check" element={<AuthCheck />} />
         <Route
           path="/test"
-          element={
-            <Test2 myString="test from test2">
-              <Test myString={`${useAuth()?.user}`} />
-            </Test2>
-          }
+          element={<Test myString={`${useAuth()?.user}`} />}
         />
         <Route path="*" element={<Catch />} />
       </Routes>

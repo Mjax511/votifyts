@@ -28,7 +28,7 @@ export const useAuth = () => {
 };
 //// Provider hook that creates auth object and handles state
 function useProvideAuth() {
-  const [user, setUser] = useState("not set yet");
+  const [user, setUser] = useState<string>("");
   //  // Wrap any Firebase methods we want to use making sure ...
   //  // ... to save the user to state.
   const signIn = (e: MouseEvent<HTMLButtonElement>) => {
