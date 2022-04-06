@@ -17,7 +17,7 @@ function App() {
         <Route path="login" element={<LoginButton />} />
         <Route path="/" element={<Homepage />}>
           <Route element={<ProtectedRoute />}>
-            <Route path="/playlists" element={<Playlists />} />
+            <Route path="playlists" element={<Playlists />} />
             <Route path="playlists/:playlistId" element={<Playlist />} />
           </Route>
         </Route>
