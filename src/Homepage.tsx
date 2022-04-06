@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { Link as RouterLink } from "react-router-dom";
+import { Outlet, Link as RouterLink } from "react-router-dom";
 import { Link, Spinner } from "@chakra-ui/react";
 import { useAuth } from "./AuthContext";
 
@@ -35,9 +35,12 @@ export const Homepage = () => {
   return (
     <div>
       <h1>Welcome {data?.display_name}</h1>
-      <Link as={RouterLink} to="/playlists">
-        Playlists
-      </Link>
+      <Outlet />
+      {
+        // <Link as={RouterLink} to="/playlists">
+        //Playlists
+        //</Link>
+      }
     </div>
   );
 };
