@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "./AuthContext";
 import { Button, Box } from "@chakra-ui/react";
 
-export const LoginButton = () => {
+export const LoginPage = () => {
   const auth = useAuth();
   return (
     <Box>

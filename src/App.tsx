@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import { LoginButton } from "./LoginButton";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { LoginPage } from "./LoginPage";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
 import { Playlist } from "./Playlist";
 import { Playlists } from "./Playlists";
+import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth, ProvideAuth } from "./AuthContext";
 import { Test3 } from "./Test3";
 
@@ -13,18 +14,18 @@ function App() {
   return (
     <ProvideAuth>
       <Routes>
-        <Route path="/login" element={<LoginButton />} />
-        <Route path="/" element={<Homepage />} />
-        <Route path="/playlists" element={<Playlists />} />
-        <Route path="/playlists/:playlistId" element={<Playlist />} />
+        <Route path="/" element={<Homepage />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Navigate to="/Playlists" />} />
+            <Route path="/playlists" element={<Playlists />} />
+            <Route path="/playlists/:playlistId" element={<Playlist />} />
+          </Route>
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/auth-check" element={<AuthCheck />} />
         <Route
           path="/test"
-          element={
-            <Test2 myString="test from test2">
-              <Test myString={`${useAuth()?.user}`} />
-            </Test2>
-          }
+          element={<Test myString={`${useAuth()?.user}`} />}
         />
         <Route path="*" element={<Catch />} />
       </Routes>

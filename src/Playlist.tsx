@@ -28,13 +28,11 @@ export const Playlist: React.FC = () => {
     endpoint,
     requestOptions,
   });
-  console.log(loading, data, error);
 
   if (loading) {
     return (
       <Box>
         <Spinner />
-        <Box>Playlist Loading from {endpoint}</Box>
       </Box>
     );
   }
