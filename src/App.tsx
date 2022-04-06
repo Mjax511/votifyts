@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { LoginButton } from "./LoginButton";
+import { LoginPage } from "./LoginPage";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
 import { Playlist } from "./Playlist";
@@ -14,7 +14,7 @@ function App() {
   return (
     <ProvideAuth>
       <Routes>
-        <Route path="login" element={<LoginButton />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Homepage />}>
           <Route element={<ProtectedRoute />}>
             <Route path="playlists" element={<Playlists />} />

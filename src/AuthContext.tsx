@@ -6,8 +6,10 @@ import React, {
   MouseEvent,
 } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 interface AuthContextInterface {
-  user: string;
+  user: string | null;
   signIn: (e: MouseEvent<HTMLButtonElement>) => void;
   setUser: (user: string) => void;
   signOut: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -29,11 +31,11 @@ export const useAuth = () => {
 };
 //// Provider hook that creates auth object and handles state
 function useProvideAuth() {
-  const [user, setUser] = useState<string>("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState<string | null>(null);
   //  // Wrap any Firebase methods we want to use making sure ...
   //  // ... to save the user to state.
   const signIn = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     sessionStorage.setItem("accessToken", "");
     console.log("sign in has run");
     const redirect_uri = "http://localhost:3000/auth-check";
@@ -47,10 +49,9 @@ function useProvideAuth() {
   };
 
   const signOut = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setUser("");
+    setUser(null);
     sessionStorage.clear();
-    window.location.href = "http://localhost:3000/login";
+    navigate("login");
   };
 
   // Return the user object and auth methods
