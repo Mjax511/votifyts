@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./LoginPage";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
@@ -14,14 +14,15 @@ function App() {
   return (
     <ProvideAuth>
       <Routes>
-        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Homepage />}>
           <Route element={<ProtectedRoute />}>
-            <Route path="playlists" element={<Playlists />} />
-            <Route path="playlists/:playlistId" element={<Playlist />} />
+            <Route path="/" element={<Navigate to="/Playlists" />} />
+            <Route path="/playlists" element={<Playlists />} />
+            <Route path="/playlists/:playlistId" element={<Playlist />} />
           </Route>
         </Route>
-        <Route path="auth-check" element={<AuthCheck />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth-check" element={<AuthCheck />} />
         <Route
           path="/test"
           element={<Test myString={`${useAuth()?.user}`} />}
