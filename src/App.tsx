@@ -15,7 +15,6 @@ function App() {
     <ProvideAuth>
       <Routes>
         <Route path="login" element={<LoginButton />} />
-        <Route path="/" element={<Homepage />} />
         <Route path="/" element={<Homepage />}>
           <Route element={<ProtectedRoute />}>
             <Route path="/playlists" element={<Playlists />} />

@@ -10,6 +10,7 @@ interface AuthContextInterface {
   user: string;
   signIn: (e: MouseEvent<HTMLButtonElement>) => void;
   setUser: (user: string) => void;
+  signOut: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 const AuthContext = createContext<AuthContextInterface | null>(null);
 
@@ -44,10 +45,19 @@ function useProvideAuth() {
     }&redirect_uri=${encodeURIComponent(redirect_uri)}`;
     window.location.href = spotifyAuthURI;
   };
+
+  const signOut = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setUser("");
+    sessionStorage.clear();
+    window.location.href = "http://localhost:3000/login";
+  };
+
   // Return the user object and auth methods
   return {
     user,
     signIn,
     setUser,
+    signOut,
   };
 }

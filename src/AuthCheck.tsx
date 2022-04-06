@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Navigate } from "react-router-dom";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
 import { Spinner } from "@chakra-ui/react";
+import { useAuth } from "./AuthContext";
 
 const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   const endpoint = "https://accounts.spotify.com/api/token";
@@ -43,7 +44,10 @@ const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   if (!data?.access_token || error) {
     return <div>{`error: ${error}!!!`}</div>;
   }
+
   sessionStorage.setItem("accessToken", data.access_token);
+  // should maybe handle isLoggedIn here
+
   return <Navigate to="/" />;
 };
 export const AuthCheck: React.FC<{}> = () => {
