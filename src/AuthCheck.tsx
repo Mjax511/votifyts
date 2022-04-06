@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Navigate } from "react-router-dom";
 import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
+import { Spinner } from "@chakra-ui/react";
 
 const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   const endpoint = "https://accounts.spotify.com/api/token";
@@ -33,7 +34,7 @@ const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
   }>({ endpoint, requestOptions });
 
   if (loading) {
-    return <div>Loading from {endpoint}</div>;
+    return <Spinner />;
   }
 
   if (!data || error) {
@@ -43,19 +44,16 @@ const HandleAuth: React.FC<{ authCode: string }> = ({ authCode }) => {
     return <div>{`error: ${error}!!!`}</div>;
   }
   sessionStorage.setItem("accessToken", data.access_token);
-  return <Navigate to="/home" />;
+  return <Navigate to="/" />;
 };
 export const AuthCheck: React.FC<{}> = () => {
-  const authCode = window.location.href.split("?")[1]
-    ? window.location.href.split("?")[1].split("=")[1]
-    : null;
-  if (authCode) {
+  const url = window.location.search;
+  const searchParams = new URLSearchParams(url);
+  const authCode = searchParams.get("code");
+
+  if (authCode && !sessionStorage.getItem("accessToken")) {
     return <HandleAuth authCode={authCode} />;
   }
 
-  // prevents user from goint to /auth-check uri
-  if (window.location.href === "http://localhost:3000/auth-check") {
-    return <Navigate to="/home" />;
-  }
-  return <Route element={<Navigate to="/login" />} />;
+  return <Navigate to="/login" />;
 };

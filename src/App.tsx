@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
 import { AuthCheck } from "./AuthCheck";
 import { Homepage } from "./Homepage";
+import { Playlist } from "./Playlist";
+import { Playlists } from "./Playlists";
 import { useAuth, ProvideAuth } from "./AuthContext";
 import { Test3 } from "./Test3";
 
@@ -12,9 +14,10 @@ function App() {
     <ProvideAuth>
       <Routes>
         <Route path="/login" element={<LoginButton />} />
-        <Route path="/" element={<Test myString="test from test" />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/playlists" element={<Playlists />} />
+        <Route path="/playlists/:playlistId" element={<Playlist />} />
         <Route path="/auth-check" element={<AuthCheck />} />
-        <Route path="/home" element={<Homepage />} />
         <Route
           path="/test"
           element={
@@ -23,6 +26,7 @@ function App() {
             </Test2>
           }
         />
+        <Route path="*" element={<Catch />} />
       </Routes>
     </ProvideAuth>
   );
@@ -35,8 +39,11 @@ function Test(props: { myString: string | null }): React.ReactElement | null {
 
 const Test2: React.FC<{ myString: string | null }> = () => {
   // return <div>{props.children}</div>; //why
-  useAuth()?.setUser("mjax")
+  useAuth()?.setUser("mjax");
   return <div>{`${useAuth()?.user}`}</div>;
+};
+const Catch: React.FC = () => {
+  return <div>Route does not exist</div>;
 };
 
 export default App;
