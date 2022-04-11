@@ -1,7 +1,7 @@
-import React from "react";
-import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { useNavigate } from "react-router-dom";
-import { List, ListItem, Spinner, Box } from "@chakra-ui/react";
+import React from 'react';
+import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
+import { useNavigate } from 'react-router-dom';
+import { List, ListItem, Spinner, Box } from '@chakra-ui/react';
 
 type FetchData = {
   items: Array<{ name: string; id: string; tracks: any }>;
@@ -10,15 +10,15 @@ type FetchData = {
 
 export const Playlists: React.FC = () => {
   const navigate = useNavigate();
-  const endpoint = "https://api.spotify.com/v1/me/playlists";
+  const endpoint = 'https://api.spotify.com/v1/me/playlists';
 
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${sessionStorage.accessToken}`);
+  myHeaders.append('Authorization', `Bearer ${sessionStorage.accessToken}`);
 
   const requestoptions = {
-    method: "get",
+    method: 'get',
     headers: myHeaders,
-    redirect: "follow",
+    redirect: 'follow',
   };
 
   const [loading, data] = useHandleFetchAndLoad<FetchData>({

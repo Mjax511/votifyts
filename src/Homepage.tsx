@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
-import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { Outlet, Link as RouterLink } from "react-router-dom";
-import { Text, Link, Spinner, Box, Button } from "@chakra-ui/react";
-import { useAuth } from "./AuthContext";
+import React, { useEffect } from 'react';
+import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
+import { Outlet, Link as RouterLink } from 'react-router-dom';
+import { Text, Link, Spinner, Box, Button } from '@chakra-ui/react';
+import { useAuth } from './AuthContext';
 
 export const Homepage = () => {
   const auth = useAuth();
-  const endpoint = "https://api.spotify.com/v1/me";
+  const endpoint = 'https://api.spotify.com/v1/me';
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${sessionStorage.accessToken}`);
+  myHeaders.append('Authorization', `Bearer ${sessionStorage.accessToken}`);
 
   const requestOptions = {
-    method: "GET",
+    method: 'GET',
     headers: myHeaders,
-    redirect: "follow",
+    redirect: 'follow',
   };
 
   const [loading, data] = useHandleFetchAndLoad<{

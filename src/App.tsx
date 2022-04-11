@@ -1,14 +1,14 @@
-import React from "react";
-import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage } from "./LoginPage";
-import { AuthCheck } from "./AuthCheck";
-import { Homepage } from "./Homepage";
-import { Playlist } from "./Playlist";
-import { Playlists } from "./Playlists";
-import { ProtectedRoute } from "./ProtectedRoute";
-import { useAuth, ProvideAuth } from "./AuthContext";
-import { Test3 } from "./Test3";
+import React from 'react';
+import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { LoginPage } from './LoginPage';
+import { AuthCheck } from './AuthCheck';
+import { Homepage } from './Homepage';
+import { Playlist } from './Playlist';
+import { Playlists } from './Playlists';
+import { ProtectedRoute } from './ProtectedRoute';
+import { useAuth, ProvideAuth } from './AuthContext';
+import { Test3 } from './Test3';
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function Test(props: { myString: string | null }): React.ReactElement | null {
 
 const Test2: React.FC<{ myString: string | null }> = () => {
   // return <div>{props.children}</div>; //why
-  useAuth()?.setUser("mjax");
+  useAuth()?.setUser('mjax');
   return <div>{`${useAuth()?.user}`}</div>;
 };
 const Catch: React.FC = () => {

@@ -1,6 +1,6 @@
-import React from "react";
-import { useAuth } from "./AuthContext";
-import { Button, Box } from "@chakra-ui/react";
+import React from 'react';
+import { useAuth } from './AuthContext';
+import { Button, Box } from '@chakra-ui/react';
 
 export const LoginPage = () => {
   const auth = useAuth();
