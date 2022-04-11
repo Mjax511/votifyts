@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
 import { useParams } from 'react-router-dom';
-import { List, ListItem, Spinner, Box } from '@chakra-ui/react';
+import { List, ListItem, Spinner, Box, Text } from '@chakra-ui/react';
 
 type FetchData = {
   items: Array<{ track: { name: string } }>;
@@ -46,7 +46,9 @@ export const Playlist: React.FC = () => {
   }
   const listSongs = (list: FetchData) => {
     return list.items.map((song, i) => (
-      <ListItem key={i}>{song.track.name}</ListItem>
+      <ListItem borderBottom="1px" borderBottomColor="grey" p="1" key={i}>
+        <Text fontSize="lg">{song.track.name}</Text>
+      </ListItem>
     ));
   };
 
@@ -62,7 +64,7 @@ export const Playlist: React.FC = () => {
 
   return (
     <Box>
-      <List>{listSongs(data)}</List>
+      <List pt="5">{listSongs(data)}</List>
     </Box>
   );
 };
