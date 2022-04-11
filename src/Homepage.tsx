@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
 import { Outlet, Link as RouterLink } from 'react-router-dom';
-import { Text, Link, Spinner, Box, Button } from '@chakra-ui/react';
+import { Text, Spacer, Link, Spinner, Box, Button } from '@chakra-ui/react';
 import { useAuth } from './AuthContext';
 
 export const Homepage = () => {
@@ -33,14 +33,17 @@ export const Homepage = () => {
   }
 
   return (
-    <Box>
-      <Box display="flex" alignItems="baseline">
-        <Text>Welcome {data?.display_name}</Text>
+    <Box p ="5">
+      <Box borderBottom ="1px" borderColor="grey" display="flex" alignItems="baseline">
+        <Text fontSize="xl" fontWeight="bold">Welcome {data?.display_name}</Text>
+        <Spacer/>
+        <Box pb="2" pr="3" pt="2">
         {auth?.user ? (
-          <Button onClick={auth?.signOut}>SignOut</Button>
-        ) : (
-          <Button onClick={auth?.signIn}>SignIn</Button>
-        )}
+            <Button onClick={auth?.signOut}>SignOut</Button>
+            ) : (
+              <Button onClick={auth?.signIn}>SignIn</Button>
+              )}
+        </Box>
       </Box>
       <Outlet />
     </Box>
