@@ -56,7 +56,7 @@ export const Playlists: React.FC = () => {
           borderBottom="1px"
           borderColor="gray.400"
           key={playlistId}
-          onClick={() => onClick({ playlist: playlistId})}
+          onClick={() => onClick({ playlist: playlistId })}
         >
           <Text pl="3" fontSize="lg">
             {playlist.name}

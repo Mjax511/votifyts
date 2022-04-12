@@ -33,16 +33,23 @@ export const Homepage = () => {
   }
 
   return (
-    <Box p ="5">
-      <Box borderBottom ="1px" borderColor="gray.400" display="flex" alignItems="baseline">
-        <Text fontSize="xl" fontWeight="bold">Welcome {data?.display_name}</Text>
-        <Spacer/>
+    <Box p="5">
+      <Box
+        borderBottom="1px"
+        borderColor="gray.400"
+        display="flex"
+        alignItems="baseline"
+      >
+        <Text fontSize="xl" fontWeight="bold">
+          Welcome {data?.display_name}
+        </Text>
+        <Spacer />
         <Box pb="2" pr="3" pt="2">
-        {auth?.user ? (
-            <Button  onClick={auth?.signOut}>SignOut</Button>
-            ) : (
-              <Button onClick={auth?.signIn}>SignIn</Button>
-              )}
+          {auth?.user ? (
+            <Button onClick={auth?.signOut}>SignOut</Button>
+          ) : (
+            <Button onClick={auth?.signIn}>SignIn</Button>
+          )}
         </Box>
       </Box>
       <Outlet />
