@@ -34,12 +34,12 @@ export const Homepage = () => {
 
   return (
     <Box p ="5">
-      <Box borderBottom ="1px" borderColor="gainsboro" display="flex" alignItems="baseline">
+      <Box borderBottom ="1px" borderColor="gray.400" display="flex" alignItems="baseline">
         <Text fontSize="xl" fontWeight="bold">Welcome {data?.display_name}</Text>
         <Spacer/>
         <Box pb="2" pr="3" pt="2">
         {auth?.user ? (
-            <Button bg="gainsboro" onClick={auth?.signOut}>SignOut</Button>
+            <Button  onClick={auth?.signOut}>SignOut</Button>
             ) : (
               <Button onClick={auth?.signIn}>SignIn</Button>
               )}

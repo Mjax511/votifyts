@@ -63,11 +63,11 @@ export const Playlist: React.FC = () => {
   const listSongs = (list: FetchData) => {
     return list.items.map((song, i) => (
       <ListItem
-        _hover={{ bg: 'gainsboro' }}
+        _hover={{ bg: 'gray.100' }}
         display="flex"
         alignItems="center"
         borderBottom="1px"
-        borderBottomColor="gainsboro"
+        borderBottomColor="gray.400"
         p="1"
         key={i}
       >

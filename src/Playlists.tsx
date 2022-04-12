@@ -49,12 +49,12 @@ export const Playlists: React.FC = () => {
       const playlistId = data.items[i].id;
       return (
         <ListItem
-          _hover={{ bg: 'gainsboro' }}
+          _hover={{ bg: 'gray.100' }}
           p="2"
           display="flex"
           alignItems="baseline"
           borderBottom="1px"
-          borderColor="gainsboro"
+          borderColor="gray.400"
           key={playlistId}
           onClick={() => onClick({ playlist: playlistId})}
         >
