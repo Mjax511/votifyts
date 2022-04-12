@@ -13,6 +13,7 @@ type FetchData = {
 
 export const Playlist: React.FC = () => {
   const playlistId = useParams().playlistId;
+  const [hoverItem, setHoverItem] = useState<null | number>(null);
   const [songList, setSongList] = useState({ index: 0, tracks: [] });
   const endpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?offset=${songList.index}`;
   var myHeaders = new Headers();
@@ -44,9 +45,23 @@ export const Playlist: React.FC = () => {
   if (data.error) {
     return <Box>404</Box>;
   }
+  const handleHover = (options: { key: number| null }) => {
+    const { key } = options;
+    if (key || key === 0) setHoverItem(key);
+    if (key === null) setHoverItem(null);
+  };
+
   const listSongs = (list: FetchData) => {
     return list.items.map((song, i) => (
-      <ListItem borderBottom="1px" borderBottomColor="grey" p="1" key={i}>
+      <ListItem
+        onMouseEnter={() => handleHover({  key: i })}
+        onMouseLeave={() => handleHover({ key: null})}
+        borderBottom="1px"
+        borderBottomColor="gainsboro"
+        bg={hoverItem === i ? "gainsboro": "" }
+        p="1"
+        key={i}
+      >
         <Text fontSize="lg">{song.track.name}</Text>
       </ListItem>
     ));

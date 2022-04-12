@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
 import { useNavigate } from 'react-router-dom';
 import { Text, List, ListItem, Spinner, Box, Spacer } from '@chakra-ui/react';
@@ -10,6 +10,7 @@ type FetchData = {
 
 export const Playlists: React.FC = () => {
   const navigate = useNavigate();
+  const [hoverItem, setHoverItem] = useState<null | number>(null);
   const endpoint = 'https://api.spotify.com/v1/me/playlists';
 
   const myHeaders = new Headers();
@@ -43,6 +44,11 @@ export const Playlists: React.FC = () => {
     const { key } = options;
     navigate(`/playlists/${data.items[key].id}`);
   };
+  const handleHover = (options: { key: number| null }) => {
+    const { key } = options;
+    if (key || key === 0) setHoverItem(key);
+    if (key === null) setHoverItem(null);
+  };
 
   const listPlaylists = (list: FetchData) => {
     console.log(data);
@@ -53,17 +59,20 @@ export const Playlists: React.FC = () => {
           display="flex"
           alignItems="baseline"
           borderBottom="1px"
-          borderColor="gray"
+          borderColor="gainsboro"
           key={i}
+        onMouseEnter={() => handleHover({  key: i })}
+        onMouseLeave={() => handleHover({ key: null})}
           onClick={() => onClick({ key: i })}
+          bg={hoverItem===i? "gainsboro": ""}
         >
           <Text pl="3" fontSize="lg">
             {playlist.name}
           </Text>
           <Spacer />
-          <Text pr="3" color="gray" fontSize="sm">{`${playlist.tracks.total} ${
-            playlist.tracks.total === 1 ? 'song' : 'songs'
-          }`}</Text>
+          <Text pr="3" color="gainsboro" fontSize="sm">{`${
+            playlist.tracks.total
+          } ${playlist.tracks.total === 1 ? 'song' : 'songs'}`}</Text>
         </ListItem>
       );
     });
