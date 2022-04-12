@@ -1,10 +1,25 @@
-import React, { useState } from "react";
-import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { useParams } from "react-router-dom";
-import { List, ListItem, Spinner } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
+import { useParams } from 'react-router-dom';
+import {
+  Spacer,
+  List,
+  ListItem,
+  Spinner,
+  Box,
+  Text,
+  Image,
+} from '@chakra-ui/react';
 
 type FetchData = {
-  items: Array<{ track: { name: string } }>;
+  items: Array<{
+    track: {
+      name: string;
+      album: { images: Array<{ url: string }> };
+      artists: Array<{ name: string }>;
+    };
+    added_by: { id: string };
+  }>;
   offset: number;
   next: string;
   total: number;
@@ -16,12 +31,12 @@ export const Playlist: React.FC = () => {
   const [songList, setSongList] = useState({ index: 0, tracks: [] });
   const endpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?offset=${songList.index}`;
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${sessionStorage.accessToken}`);
+  myHeaders.append('Authorization', `Bearer ${sessionStorage.accessToken}`);
 
   var requestOptions = {
-    method: "GET",
+    method: 'GET',
     headers: myHeaders,
-    redirect: "follow",
+    redirect: 'follow',
   };
 
   const [loading, data, error] = useHandleFetchAndLoad<FetchData>({
@@ -31,22 +46,48 @@ export const Playlist: React.FC = () => {
 
   if (loading) {
     return (
-      <div>
+      <Box>
         <Spinner />
-      </div>
+      </Box>
     );
   }
 
   if (!data) {
-    return <div>no data in songlist</div>;
+    return <Box>no data in songlist</Box>;
   }
 
   if (data.error) {
-    return <div>404</div>;
+    return <Box>404</Box>;
   }
+  console.log(data);
   const listSongs = (list: FetchData) => {
     return list.items.map((song, i) => (
-      <ListItem key={i}>{song.track.name}</ListItem>
+      <ListItem
+        _hover={{ bg: 'gainsboro' }}
+        display="flex"
+        alignItems="center"
+        borderBottom="1px"
+        borderBottomColor="gainsboro"
+        p="1"
+        key={i}
+      >
+        <Image
+          m="1"
+          fit="contain"
+          boxSize="40px"
+          src={song.track.album.images[2].url}
+        />
+        <Text pl="5" fontSize="lg">
+          {`${song.track.name}`}&nbsp;
+        </Text>
+        <Text color="gray.400" fontSize="md">{`- ${song.track.artists
+          .map((artist) => ' ' + artist.name)
+          .join(' / ')}`}</Text>
+        <Spacer />
+        <Text pr="5" color="gray.400" fontSize="xs">
+          {`${song.added_by.id}`}
+        </Text>
+      </ListItem>
     ));
   };
 
@@ -61,8 +102,8 @@ export const Playlist: React.FC = () => {
   //   if (data.next) refresh();
 
   return (
-    <div>
-      <List variant="striped">{listSongs(data)}</List>
-    </div>
+    <Box>
+      <List pt="5">{listSongs(data)}</List>
+    </Box>
   );
 };

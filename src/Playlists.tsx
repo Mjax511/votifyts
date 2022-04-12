@@ -1,7 +1,7 @@
-import React from "react";
-import { useHandleFetchAndLoad } from "./useHandleFetchAndLoad";
-import { useNavigate } from "react-router-dom";
-import { List, ListItem, Spinner } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
+import { useNavigate } from 'react-router-dom';
+import { Text, List, ListItem, Spinner, Box, Spacer } from '@chakra-ui/react';
 
 type FetchData = {
   items: Array<{ name: string; id: string; tracks: any }>;
@@ -10,15 +10,15 @@ type FetchData = {
 
 export const Playlists: React.FC = () => {
   const navigate = useNavigate();
-  const endpoint = "https://api.spotify.com/v1/me/playlists";
+  const endpoint = 'https://api.spotify.com/v1/me/playlists';
 
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${sessionStorage.accessToken}`);
+  myHeaders.append('Authorization', `Bearer ${sessionStorage.accessToken}`);
 
   const requestoptions = {
-    method: "get",
+    method: 'get',
     headers: myHeaders,
-    redirect: "follow",
+    redirect: 'follow',
   };
 
   const [loading, data] = useHandleFetchAndLoad<FetchData>({
@@ -28,34 +28,50 @@ export const Playlists: React.FC = () => {
 
   if (loading) {
     return (
-      <div>
+      <Box>
         <Spinner />
-      </div>
+      </Box>
     );
   }
 
   if (!data) {
     //checks to make sure data exists otherwise data needs to be data?
-    return <div>Playlist Loading from {endpoint}</div>;
+    return <Box>Playlist Loading from {endpoint}</Box>;
   }
 
-  const onClick = (options: { index: number }) => {
-    const { index } = options;
-    navigate(`/playlists/${data.items[index].id}`);
+  const onClick = (options: { playlist: string }) => {
+    const { playlist } = options;
+    navigate(`/playlists/${playlist}`);
   };
 
   const listPlaylists = (list: FetchData) => {
     return list.items.map((playlist, i) => {
+      const playlistId = data.items[i].id;
       return (
-        <ListItem key={playlist.id} onClick={() => onClick({ index: i })}>
-          {playlist.name}
+        <ListItem
+          _hover={{ bg: 'gainsboro' }}
+          p="2"
+          display="flex"
+          alignItems="baseline"
+          borderBottom="1px"
+          borderColor="gainsboro"
+          key={playlistId}
+          onClick={() => onClick({ playlist: playlistId})}
+        >
+          <Text pl="3" fontSize="lg">
+            {playlist.name}
+          </Text>
+          <Spacer />
+          <Text pr="3" color="gray.400" fontSize="sm">{`${
+            playlist.tracks.total
+          } ${playlist.tracks.total === 1 ? 'song' : 'songs'}`}</Text>
         </ListItem>
       );
     });
   };
   return (
-    <div>
-      <List>{listPlaylists(data)}</List>
-    </div>
+    <Box>
+      <List pt="5">{listPlaylists(data)}</List>
+    </Box>
   );
 };

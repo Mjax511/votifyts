@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 // interface RequestOptionsI {
 //   method: string,
@@ -8,11 +8,13 @@ type UseHandleFetchAndLoadResults<Data> = [
   loading: boolean,
   data: Data | null,
   error: any
-]
+];
 
-
-export function useHandleFetchAndLoad<Data>(options: { endpoint : string, requestOptions: any }): UseHandleFetchAndLoadResults<Data> {
-  const {endpoint, requestOptions} = options;
+export function useHandleFetchAndLoad<Data>(options: {
+  endpoint: string;
+  requestOptions: any;
+}): UseHandleFetchAndLoadResults<Data> {
+  const { endpoint, requestOptions } = options;
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -47,5 +49,5 @@ export function useHandleFetchAndLoad<Data>(options: { endpoint : string, reques
   // }
   //how to do this?
 
-  return [loading, data, error ];
+  return [loading, data, error];
 }

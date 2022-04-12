@@ -1,13 +1,13 @@
-import React from "react";
-import { useAuth } from "./AuthContext";
-import { Button } from "@chakra-ui/react";
+import React from 'react';
+import { useAuth } from './AuthContext';
+import { Button, Box } from '@chakra-ui/react';
 
 export const LoginPage = () => {
   const auth = useAuth();
   return (
-    <div>
+    <Box>
       <h2> You are not logged in</h2>
       <Button onClick={auth?.signIn}>Login</Button>
-    </div>
+    </Box>
   );
 };
