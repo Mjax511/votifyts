@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useHandleFetchAndLoad } from './useHandleFetchAndLoad';
 import { useNavigate } from 'react-router-dom';
 import { Text, List, ListItem, Spinner, Box, Spacer } from '@chakra-ui/react';
@@ -44,27 +44,26 @@ export const Playlists: React.FC = () => {
     const { key } = options;
     navigate(`/playlists/${data.items[key].id}`);
   };
-  const handleHover = (options: { key: number| null }) => {
+  const handleHover = (options: { key: number | null }) => {
     const { key } = options;
     if (key || key === 0) setHoverItem(key);
     if (key === null) setHoverItem(null);
   };
 
   const listPlaylists = (list: FetchData) => {
-    console.log(data);
     return list.items.map((playlist, i) => {
       return (
         <ListItem
-          p="1"
+          p="2"
           display="flex"
           alignItems="baseline"
           borderBottom="1px"
           borderColor="gainsboro"
           key={i}
-        onMouseEnter={() => handleHover({  key: i })}
-        onMouseLeave={() => handleHover({ key: null})}
+          onMouseEnter={() => handleHover({ key: i })}
+          onMouseLeave={() => handleHover({ key: null })}
           onClick={() => onClick({ key: i })}
-          bg={hoverItem===i? "gainsboro": ""}
+          bg={hoverItem === i ? 'gainsboro' : ''}
         >
           <Text pl="3" fontSize="lg">
             {playlist.name}
